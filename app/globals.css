@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* DESIGN EXPLODE V2 palette: midnight + bone, with ember accents */
+@theme {
+  --color-ink: #0b0b14;
+  --color-ink-2: #15152299;
+  --color-bone: #f1ebdd;
+  --color-ember: #ff6a1f;
+  --color-aqua: #19e3d2;
+  --color-crimson: #e8204f;
+  --color-butter: #ffd84a;
+  --font-display:
+    "Arial Black", "Helvetica Neue", Impact, system-ui, sans-serif;
+  --font-sans: "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+:root {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-butter);
+  outline-offset: 3px;
+}
+
+/* Type system */
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 0.86;
+}
+.h-hero {
+  font-size: clamp(2.6rem, 12.4vw, 11.5rem);
+}
+.h-section {
+  font-size: clamp(2.4rem, 8.5vw, 8rem);
+}
+.meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fine-only {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .fine-only {
+    display: block;
+  }
+  .has-cursor,
+  .has-cursor a,
+  .has-cursor button {
+    cursor: none;
+  }
+}
+
+/* Marquee: pure CSS, pauses on hover */
+@keyframes marquee-left {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(6deg);
+  }
+}
+.drift {
+  animation: drift 6s ease-in-out infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track,
+  .drift,
+  .spin-slow {
+    animation: none !important;
+  }
+}
